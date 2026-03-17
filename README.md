@@ -1,4 +1,4 @@
-# 3b.CREATION FOR CHAT USING TCP SOCKETS
+## 3b.CREATION FOR CHAT USING TCP SOCKETS
 ## AIM
 To write a python program for creating Chat using TCP Sockets Links.
 ## ALGORITHM:
@@ -8,61 +8,45 @@ To write a python program for creating Chat using TCP Sockets Links.
  server
 4. Send and receive the message using the send function in socket.
 ## PROGRAM
-CLIENT
-```
+### Server.py
+```.py
 import socket
-s=socket.socket()
+
+s = socket.socket()
+s.bind(('localhost', 8000))
+s.listen(1)
+
+print("Server is waiting for connection...")
+
+c, addr = s.accept()
+print("Connected to:", addr)
+
+while True:
+    msg = c.recv(1024).decode()
+    print("Client >", msg)
+    reply = input("Server > ")
+    c.send(reply.encode())
+```
+
+
+### Client.py
+```.py
+import socket
+
+s = socket.socket()
 s.connect(('localhost', 8000))
-print("Connected to server")
+
 while True:
     msg = input("Client > ")
     s.send(msg.encode())
-    if msg.lower() == "exit":
-        print("Disconnected from server")
-        break
-    serverReply = s.recv(1024).decode()    
-    if serverReply.lower() == "exit":
-        print("Server closed connection")
-        break 
-    print("Server >", serverReply)
-s.close()
-
-
-```
-SERVER
-```
-import socket
-s=socket.socket()
-s.bind(('localhost', 8000))
-s.listen(1)
-print("Waiting for connection...")
-c, addr=s.accept()
-print("Connected to", addr)
-while True:
-    clientMessage = c.recv(1024).decode()  
-    if clientMessage.lower() == "exit":
-        print("Client disconnected")
-        break
-    print("Client >", clientMessage)
-    msg = input("Server > ")
-    c.send(msg.encode())
-    if msg.lower() == "exit":
-        print("Server stopped")
-        break
-c.close()
-s.close()
-
-
+    print("Server >", s.recv(1024).decode())
 ```
 
 ## OUPUT
-
-
+<img width="1918" height="1198" alt="Screenshot 2026-02-25 140800" src="https://github.com/user-attachments/assets/16e2b7c6-1618-4353-97e0-4028a7517dd8" /># 
 
 
 
 ## RESULT
 Thus, the python program for creating Chat using TCP Sockets Links was successfully 
 created and executed.
-
-
